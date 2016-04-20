@@ -1,0 +1,50 @@
+.container {
+    height: 115px;
+    position: absolute;
+    width: 375px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.containTheColor {
+    position: relative;
+    border: 7px solid white;
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px #666;
+    width: 361px;
+    height: 101px;
+}
+img, .overlay {
+    position: absolute;
+    width: 361px;
+    height: 101px;
+}
+.overlay {
+    background: black;
+    cursor: crosshair;
+    opacity: .5;
+}
+
+input[type="range"] {
+    width: 115px;
+    transform: translate(340px, -65px) rotate(-90deg);
+}
+
+.crosshair {
+    background: transparent center center url("http://i.imgur.com/Y8FIYIk.gif") no-repeat scroll;
+    display: block;
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
+    position: absolute;
+}
+.DyeMe {
+     border: 10px solid #808080;
+    height: 100px;
+    left: 400px;
+    position: absolute;
+    top: 70px;
+    width: 100px;
+}
