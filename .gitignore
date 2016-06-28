@@ -2,3 +2,4 @@ nbproject/
 .sass-cache/
 .idea/
 *.*~
+node_modules/

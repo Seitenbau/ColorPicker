@@ -1,0 +1,24 @@
+{
+  "name": "colorpicker",
+  "version": "1.0.0",
+  "description": "colorpicker",
+  "main": "js/colorPicker.js",
+  "scripts": {
+    "test": "npm run test:node",
+    "test:node": "mocha --check-leaks --reporter spec test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seitenbau/ColorPicker.git"
+  },
+  "author": "Lukas ochmann",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Seitenbau/ColorPicker/issues"
+  },
+  "homepage": "https://github.com/Seitenbau/ColorPicker#readme",
+  "devDependencies": {
+    "expect": "^1.20.1",
+    "mocha": "^2.5.3"
+  }
+}

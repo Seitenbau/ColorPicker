@@ -9,6 +9,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="node_modules/mocha/mocha.css"/>
     </head>
     <body>
 
@@ -20,52 +21,64 @@
             <input type="text" id="ColorPicker" value="">
         </div>
         <script src="js/background.js"></script>
-        <script src="js/colorPicker.js"></script>
-        <script src="js/Test.js"></script>
+        <div id="mocha"></div>
+        <script src="node_modules/mocha/mocha.js"></script>
         <script>
-            ColorPicker.setGlobalStyle({
-                    '.containTheColor': {
-                        border: '7px solid green'
-                    }
-                }, 'hallo2');
-            var color = new ColorPicker({
-                'append': '#ColorPicker',       // {input[type=text]} !important
-                'view': '#ColorPicker',       // {input[type=text]} 
-                //'dye':  '.big',                    // object class witch will be dyed. if undefined it is same as append
-                //'css': 'borderColor',
-                //'backgroundColor',            // 'borderColor', 'color', 'backgroundColor' 
-
-                'format': 'hsv',              // 'hex', 'RGB', 'Hsl', 'hSv' caps dosent matter
-                //'standard':'2a364f', //{                 // first value witch will be shown.
-                //    h: 207,                   // note that this need to be hsv min.: 0, max.:360 
-                //    s: 1.0,                   // min.: 0 max.: 1.0
-                //   v: 0.51                    // min.: 0 max.: 1.0
-                //},
-
-                //'position': 'bottom left',    // 'bottom center/left/right', 'top center/left/right', 
-                // 'bottom', 'top', 'left', 'right'
-                //left  top              // 'bottom' == 'bottom middle', 'top' == 'top middle' 
-                //'margin': '1000 -30',              // spacing between the input and the ColorPicker  
-                
-                customCss: {
-                    '.containTheColor': {
-                        border: '7px solid black',
-                        width: '500px'
-                    }
-                },
-                //execute: function () {},
-                //alwaysActive: true,
-                //close: function () {
-                //    console.log("test");
-                //},
-                //open: function () {
-                //},
-                //painter: false
-            });
-            var color2 = new ColorPicker({
-                'append': '.NoColor'
-            });
+            mocha.ui('bdd');
         </script>
+        <script src="node_modules/expect/umd/expect.min.js"></script>
+        <script src="js/colorPicker.js"></script>
+        <script src="test/test.js"></script>
+
+        <script>
+
+    //var spy = new Spy();
+    //spy.registerSpy('ColorPicker');
+    //var mock = new Mock();
+    ColorPicker.setGlobalStyle({
+        '.containTheColor': {
+            border: '7px solid green'
+        }
+    });
+    var color = new ColorPicker({
+        'append': '#ColorPicker',       // {input[type=text]} !important
+        'view': '#ColorPicker',       // {input[type=text]} 
+        //'dye':  '.big',                    // object class witch will be dyed. if undefined it is same as append
+        //'css': 'borderColor',
+        //'backgroundColor',            // 'borderColor', 'color', 'backgroundColor' 
+
+        'format': 'hex',              // 'hex', 'RGB', 'Hsl', 'hSv' caps dosent matter
+        //'standard':'2a364f', //{                 // first value witch will be shown.
+        //    h: 207,                   // note that this need to be hsv min.: 0, max.:360 
+        //    s: 1.0,                   // min.: 0 max.: 1.0
+        //   v: 0.51                    // min.: 0 max.: 1.0
+        //},
+
+        //'position': 'bottom left',    // 'bottom center/left/right', 'top center/left/right', 
+        // 'bottom', 'top', 'left', 'right'
+        //left  top              // 'bottom' == 'bottom middle', 'top' == 'top middle' 
+        //'margin': '1000 -30',              // spacing between the input and the ColorPicker  
+
+        customCss: {
+            '.containTheColor': {
+                border: '7px solid black',
+                width: '500px'
+            }
+        },
+        //execute: function () {},
+        //alwaysActive: true,
+        //close: function () {
+        //    console.log("test");
+        //},
+        //open: function () {
+        //},
+        //painter: false
+    });
+    var color2 = new ColorPicker({
+        'append': '.NoColor'
+    });
+        </script>
+        <script> mocha.run();</script>
     </body>
 
 </html>
