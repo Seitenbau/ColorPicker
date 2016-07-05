@@ -58,7 +58,7 @@ background = 'iVBORw0KGgoAAAANSUhEUgAAAWkAAABlCAYAAAH4ySIXAAAY5klEQVR42u1da5fkKI
     'Z//7NJYGAZ3Sd0+Cyya4cnaLJ3ifSSuP2PMddTCZpY4cs9QRwD3p32NpB/uoPI4+s/19qTOPPu+eBJdNcIXsVkWwLJMG8F+miponinVqmcUwdu+BKlrjDcphF7Wu5yfBZRNcObvFE7y64F1u2InVMCMOFLP2PFcpwyD/n9rRuyWhWTnGiF1DD65eqsFBp+TZSXDZBFfK' +
     'bjUEr5n0UVslNISPDiDDwDbbNssY09RWxoGeJ5wXoWRSqc+4sAK5887A0OZ77yS4bIIrZrcKgvlMGpjY4zywAPHNwe41SHw0SDy1SFzeuRttqFu8TRlGm4tWeSZ9ElwCwZWzWzzB62SWo6YlcUEhRTDHuhIwe6cT0rgZ+lLah4PCSXDZBJ/slk3wOnB4i/3Vm0A2Q+e3' +
     'JlzaIXT2/60z5AEA+l0mfRJcMsGVsVsdwdtMmouDmCLYNaFfwqwP6zcqg33+nm95G0J9L3x2Elw2wSe7ZRO8ZtLSDiyKYR/GW6Tt1IJ7eVfpchN3utywAvlMf1ePVS+gu99k0ifBpRJcObvFE/z/p2k4h2mO9AYAAAAASUVORK5CYII=';
-
+crosshair = "R0lGODlhDwAPAKEBAAAAAP///////////yH5BAEKAAIALAAAAAAPAA8AAAIklB8Qx53b4otSUWcvyiz4/4AeQJbmKY4p1HHapBlwPL/uVRsFADs=";
 
 
 
@@ -202,17 +202,14 @@ var ColorPicker = function (params) {
         }
     }
 };
-/**
- * 
- * @type {@exp;Object@call;create}
- */
+
 ColorPicker.prototype = Object.create(Object.prototype);
 
 /**
  * add the style sheet used by the colorPicker
  * this funfunction is normaly called one time
  * just add a <style></style>
- * @param {object} overrideObject contains a css object
+ * @param {object} overrideObject a object can be build  like css 
  */
 ColorPicker.prototype.styleSheet = function (overrideObject) {
     if (!document.querySelector('.ColorpickerStylesheet' + this.timeStamp)) {
@@ -228,8 +225,11 @@ ColorPicker.prototype.styleSheet = function (overrideObject) {
     }
 
 };
+
 /**
  * based on the css Object a string will generate wich uses the css-syntax
+ * @param {object} cssObejct containing css
+ * @param {string} timeStamp timeStaqmp for Identify
  * @return {string} this sting is generated out of the cssObject which is given in
  */
 ColorPicker.prototype.cssStringCreator = function (cssObject, timeStamp) {
@@ -1037,7 +1037,7 @@ ColorPicker.setGlobalStyle = function (cssGlobalObject) {
             transform: 'translate(340px, -70px) rotate(-90deg)'
         },
         '.crosshair': {
-            background: 'transparent center center url("http://i.imgur.com/Y8FIYIk.gif") no-repeat scroll',
+            background: 'transparent center center url(data:image/png;base64,' + crosshair + ') no-repeat scroll',
             display: 'block',
             width: '15px',
             height: '15px',
