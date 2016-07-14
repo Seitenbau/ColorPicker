@@ -24,7 +24,7 @@
         <div id="mocha"></div>
         <script src="node_modules/mocha/mocha.js"></script>
         <script>
-            mocha.ui('bdd');
+            //mocha.ui('bdd');
         </script>
         <script src="node_modules/expect/umd/expect.min.js"></script>
         <script src="js/colorPicker.js"></script>
@@ -48,7 +48,7 @@
         //'backgroundColor',            // 'borderColor', 'color', 'backgroundColor' 
 
         'format': 'hex',              // 'hex', 'RGB', 'Hsl', 'hSv' caps dosent matter
-        //'standard':'2a364f', //{                 // first value witch will be shown.
+        'standard':'0088f5', //{                 // first value witch will be shown.
         //    h: 207,                   // note that this need to be hsv min.: 0, max.:360 
         //    s: 1.0,                   // min.: 0 max.: 1.0
         //   v: 0.51                    // min.: 0 max.: 1.0
@@ -65,6 +65,10 @@
                 width: '500px'
             }
         },
+        defined: {
+            data:[['#ffffff', '#000000'],['#ff0000','#00ff00','#0000ff'], ['#d4d6d8']],
+            switch: true
+        },
         //execute: function () {},
         //alwaysActive: true,
         //close: function () {
@@ -72,13 +76,13 @@
         //},
         //open: function () {
         //},
-        //painter: false
+        painter: true
     });
     var color2 = new ColorPicker({
         'append': '.NoColor'
     });
         </script>
-        <script> mocha.run();</script>
+        <!--<script> mocha.run();</script>-->
     </body>
 
 </html>
