@@ -15,13 +15,14 @@
 
         
         <input type="text" class="NoColor">
+        <input type="text" id="ColorPicker" value="">
         <!--<div class="DyeMe">HALLO</div>-->
-        <div class="big">
+        <!--<div class="big">
             <div class="no1"></div>
             color
-            <input type="text" id="ColorPicker" value="">
+            
             <div class="no1"></div><div class="no1"></div>
-        </div>
+        </div>-->
         <script src="js/background.js"></script>
         <div id="mocha"></div>
         <script src="node_modules/mocha/mocha.js"></script>
@@ -37,11 +38,11 @@
     //var spy = new Spy();
     //spy.registerSpy('ColorPicker');
     //var mock = new Mock();
-    ColorPicker.setGlobalStyle({
-        '.containTheColor': {
-            border: '7px solid green'
-        }
-    });
+    //ColorPicker.setGlobalStyle({
+    //    '.containTheColor': {
+    //        border: '7px solid green'
+    //    }
+    //});
     var color = new ColorPicker({
         'append': '#ColorPicker',       // {input[type=text]} !important
         'view': '#ColorPicker',       // {input[type=text]} 
@@ -56,33 +57,36 @@
         //   v: 0.51                    // min.: 0 max.: 1.0
         //},
 
-        //'position': 'bottom left',    // 'bottom center/left/right', 'top center/left/right', 
+        'position': 'right',    // 'bottom center/left/right', 'top center/left/right', 
         // 'bottom', 'top', 'left', 'right'
         //left  top              // 'bottom' == 'bottom middle', 'top' == 'top middle' 
         //'margin': '1000 -30',              // spacing between the input and the ColorPicker  
 
         customCss: {
             '.containTheColor': {
-                border: '7px solid black',
-                width: '500px'
+                border: '7px solid black'
+                
             }
         },
         defined: {
             data:[['#ffffff', '#000000'],['#ff0000','#00ff00','#0000ff'], ['#d4d6d8']],
             switch: false
         },
-        //execute: function () {},
+        execute: function () {
+            console.log("exec");
+        },
         //alwaysActive: true,
-        //close: function () {
-        //    console.log("test");
-        //},
-        //open: function () {
-        //},
+        close: function () {
+            console.log("close");
+        },
+        open: function () {
+            console.log("open");
+        },
         painter: false
     });
-    var color2 = new ColorPicker({
-        'append': '.NoColor'
-    });
+    //var color2 = new ColorPicker({
+    //    'append': '.NoColor'
+    //});
         </script>
         <script>
             

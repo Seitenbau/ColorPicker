@@ -140,10 +140,15 @@ var ColorPicker = function (params) {
 
     }
     // top, right, bottom, left from the inputtype
+    this.aligen = {
+            first: 'bottom',
+            second: 'center'
+        };
     if (typeof params.position !== 'undefined') {
-        this.aligen = params.position.toLocaleLowerCase();
-    } else {
-        this.align = 'bottom';
+        this.aligen = {
+            first: params.position.toLocaleLowerCase(params.position.substring(params.position.indexOf(' '), 0)),
+            second: params.position.toLocaleLowerCase(params.position.substring(params.position.indexOf(' ') + 1))
+        };
     }
     // css: color, borderColor, backgroundColor .... default = backgroundColor 
     if (typeof params.css !== 'undefined') {
@@ -157,10 +162,15 @@ var ColorPicker = function (params) {
         this.painterInit = params.painter;
     }
     // margin between the colorPicker and the input type
+    this.margin = {
+        left: 0,
+        top: 0
+    };
     if (typeof params.margin != 'undefined') {
-        this.margin = params.margin;
-    } else {
-        this.margin = '0 0';
+        this.margin = {
+            left: parseInt(this.margin.substring(this.margin.indexOf(' '), 0)),
+            top: parseInt(this.margin.substring(this.margin.indexOf(' ') + 1))
+        };
     }
     //
     this.defined = null;
@@ -209,11 +219,11 @@ ColorPicker.prototype = Object.create(Object.prototype);
 ColorPicker.prototype.createColorPicker = function () {
     this.ContainerDiv = document.createElement('div');
     this.ContainerDiv.setAttribute('class', 'container container' + this.timeStamp);
-    this.ContainerDiv.innerHTML = this.UI.replace(/%buttons%/gi, (this.defined != null) ?
-        this.renderDefaults() : '');
-
+    this.ContainerDiv.innerHTML = this.UI;
+    this.renderDefaults();
     if (this.defined != null) {
-        this.changeMode(this.mode== false && typeof this.defined != 'undefined'? !this.mode: this.mode);
+        this.changeMode(this.mode == false && typeof this.defined != 'undefined' ?
+            !this.mode : this.mode);
     }
     if (this.switch && typeof this.defined != 'undefined') {
         this.toggleMode();
@@ -315,10 +325,10 @@ ColorPicker.prototype.renderColorPicker = function () {
  * runs in an interval of 100 ms the renderPosition. will be used when the colorpicker is open
  */
 ColorPicker.prototype.intervalrendering = function () {
-    var self = this;
-    this.interval = setInterval(function () {
-        self.renderPosition();
-    }, 100);
+//    var self = this;
+//    this.interval = setInterval(function () {
+//        self.renderPosition();
+//    }, 100);
 };
 
 ColorPicker.prototype.container = {
@@ -334,14 +344,7 @@ ColorPicker.prototype.container = {
  * set the position to the colorpicker based on the margin and 
  */
 ColorPicker.prototype.renderPosition = function () {
-    var first = this.aligen.substring(this.aligen.indexOf(' '), 0); // get first position value
-    var second = this.aligen.substring(this.aligen.indexOf(' ') + 1); //get second position value
     var scroll = window.scrollY;
-    if (first === '') {
-        first = this.aligen;
-    }
-    var marginLeft = parseInt(this.margin.substring(this.margin.indexOf(' '), 0));
-    var marginTop = parseInt(this.margin.substring(this.margin.indexOf(' ') + 1));
     var pos = this.container.getBoundingClientRect(); //align values from Input
     // the color picker is appanded 
     var height = pos.height;
@@ -349,45 +352,30 @@ ColorPicker.prototype.renderPosition = function () {
     var width = pos.width;
     var top = pos.top;
     var left = pos.left;
-    switch (first) {
-        case 'bottom':
-            this.ContainerDiv.style.top = (height + top + marginTop + scroll) + 'px';
-            if (second == 'center') {
-                this.ContainerDiv.style.left = (((left + (width * 0.5)) - (375 / 2)) + marginLeft) + "px";
-            } else if (second == 'left') {
-                this.ContainerDiv.style.left = ((left - 375) + marginLeft) + "px";
-            } else if (second == 'right') {
-                this.ContainerDiv.style.left = ((left + width) + marginLeft) + "px";
-            } else {
-                this.ContainerDiv.style.left = (((left + (width * 0.5)) - (375 / 2)) + marginLeft) + "px";
-            }
-            break;
-        case 'top':
-            this.ContainerDiv.style.top = (top - 115 - marginTop + scroll) + 'px';
-            if (second == 'center') {
-                this.ContainerDiv.style.left = (((left + (width * 0.5)) - (375 / 2)) + marginLeft) + "px";
-            } else if (second == 'left') {
-                this.ContainerDiv.style.left = ((left - 375) + marginLeft) + "px";
-            } else if (second == 'right') {
-                this.ContainerDiv.style.left = ((left + width) + marginLeft) + "px";
-            } else {
-                this.ContainerDiv.style.left = (((left + (width * 0.5)) - (375 / 2)) + marginLeft) + "px";
-            }
-            break;
-        case 'left':
-            this.ContainerDiv.style.top = (((top + (height * 0.5)) - (115 / 2)) + marginTop + scroll) + 'px';
-            this.ContainerDiv.style.left = (left - 375 - marginLeft) + 'px';
-            break;
-        case 'right':
-            this.ContainerDiv.style.top = (((top + (height * 0.5)) - (115 / 2)) + marginTop + scroll) + 'px';
-            this.ContainerDiv.style.left = (left + width + marginLeft) + 'px';
-            break;
-        default:
-            this.ContainerDiv.style.top = (height + top + marginTop + scroll) + 'px';
-            this.ContainerDiv.style.left = (((left + (width * 0.5)) - (375 / 2)) + marginLeft) + "px";
-            break;
-    }
+    var positionValues = {
+        top: 0,
+        left: 0
+    };
+    positionValues.top = (top +
+        ((this.aligen.first == 'top') ? -115 :
+            (this.aligen.first == 'bottom') ? height :
+            (this.aligen.first == 'left' || this.aligen.first == 'right') ?
+            (height * 0.5) - (115 / 2) :
+            height)) +
+        (this.margin.top + scroll);
+
+    positionValues.left = left + ((this.aligen.second == 'center') ?
+        (width * 0.5) - (375 / 2) : (this.aligen.second == 'left') ? -375 :
+        width) + this.margin.left;
+    this.setPosition(positionValues);
+
 };
+
+ColorPicker.prototype.setPosition = function (values) {
+    this.ContainerDiv.style.top = values.top + 'px';
+    this.ContainerDiv.style.left = values.left + "px";
+};
+
 /*
  * Starts the Colorpicker Event
  * @method initPicker
@@ -720,7 +708,9 @@ ColorPicker.prototype.getCurrentColor = function () {
  */
 ColorPicker.prototype.renderDefaults = function () {
     if (this.defined == null) {
-        return '';
+        console.log("null");
+        this.ContainerDiv.querySelector('.standardValues'+ this.timeStamp).remove();
+        return;
     }
     var result = '';
     var row = '<div class="rowWrap">&&</div>';
@@ -732,7 +722,7 @@ ColorPicker.prototype.renderDefaults = function () {
         }
         result = result + row.replace('&&', datas);
     }
-    return result;
+     this.ContainerDiv.querySelector('.standardValues').innerHTML = result;
 };
 
 /**
@@ -746,6 +736,9 @@ ColorPicker.prototype.setAction = function (mode) {
         buttons[i][(mode == true) ? 'addEventListener' :
             'removeEventListener']('click', function () {
             self.generateColors(this.dataset.color.replace('#', ''));
+            if (self.callback) {
+                self.callback(self.rgb, self.hsl, self.hsv, self.hex);
+            }
             self.setColorToObject();
         });
     }
