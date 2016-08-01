@@ -163,7 +163,7 @@ var ColorPicker = function (params) {
         this.margin = '0 0';
     }
     //
-    this.defined == null;
+    this.defined = null;
     if (typeof params.defined !== 'undefined') {
         this.defined = params.defined.data;
         this.switch = params.defined.switch;
@@ -241,7 +241,7 @@ ColorPicker.prototype.changeMode = function (mode) {
     if (mode) {
         console.log(mode, 1);
         ColorPicker.add(this.ContainerDiv.querySelector('.analogValues'), 'hidden');
-        ColorPicker.remove(this.ContainerDiv.querySelector('.standardValues'), 'hidden')
+        ColorPicker.remove(this.ContainerDiv.querySelector('.standardValues'), 'hidden');
     } else {
         console.log(mode, 2);
         ColorPicker.remove(this.ContainerDiv.querySelector('.analogValues'), 'hidden')
@@ -326,9 +326,9 @@ ColorPicker.prototype.container = {
         return {
             left: 1,
             top: 2
-        }
+        };
     }
-}
+};
 /** 
  * 
  * set the position to the colorpicker based on the margin and 
@@ -441,7 +441,7 @@ ColorPicker.prototype.paint = function (onSlide) {
     this.generateColors(this.hsv);
     this.setColorToObject();
     if (this.crosshair) {
-        this.uiUpdate()
+        this.uiUpdate();
     }
 };
 
@@ -598,7 +598,7 @@ ColorPicker.prototype.generateColors = function (value) {
         this.hex = ColorPicker.hsvToHex(value);
         this.hsl = ColorPicker.hsvToHsl(value);
     }
-}
+};
 /**
  * 
  * This Method checks format at the given String, if the format is hex it will return true, because reExe exclude non-hex-terms,
@@ -724,7 +724,7 @@ ColorPicker.prototype.renderDefaults = function () {
     }
     var result = '';
     var row = '<div class="rowWrap">&&</div>';
-    var dataTpl = '<button class="colorField" data-color="%color%" style="background-color: %color%"></button>'
+    var dataTpl = '<button class="colorField" data-color="%color%" style="background-color: %color%"></button>';
     for (var i = 0; i < this.defined.length; i++) {
         var datas = '';
         for (var j = 0; j < this.defined[i].length; j++) {
@@ -1050,6 +1050,8 @@ ColorPicker.prototype.inputReader = true;
  * this funfunction is normaly called one time
  * just add a <style></style>
  * @param {object} overrideObject a object can be build  like css 
+ * @param {object} newCss own styls
+ * @param {string} timeStamp timestamp for each picker
  */
 ColorPicker.styleSheet = function (overrideObject, newCss, timeStamp) {
     if (!document.querySelector('.ColorpickerStylesheet' + timeStamp)) {
@@ -1068,7 +1070,7 @@ ColorPicker.styleSheet = function (overrideObject, newCss, timeStamp) {
 
 /**
  * based on the css Object a string will generate wich uses the css-syntax
- * @param {object} cssObejct containing css
+ * @param {object} cssObject containing css
  * @param {string} timeStamp timeStaqmp for Identify
  * @return {string} this sting is generated out of the cssObject which is given in
  */
@@ -1089,7 +1091,8 @@ ColorPicker.cssStringCreator = function (cssObject, timeStamp) {
 };
 /**
  * takes the normal css obejct and adds or overrides with keys from the argument
- * @param {obejct} overrideObjects the  values wich overrides the css obejct
+ * @param {obejct} target the  values wich overrides the css obejct
+ * @param {object} source override this
  */
 ColorPicker.cssOverride = function (target, source) {
     for (var key in source) {
@@ -1109,7 +1112,7 @@ ColorPicker.add = function (object, classStr) {
 };
 ColorPicker.remove = function (object, classStr) {
     object.className = object.className.replace(' ' + classStr, '');
-}
+};
 
 ColorPicker.setGlobalStyle = function (cssGlobalObject) {
     var globCss = {
