@@ -85,14 +85,14 @@ var ColorPicker = function (params) {
     this.activate = true;
 
     this.currentColor = {
-        h: '0',
-        s: '0',
-        l: '0'
+        h: 0,
+        s: 0,
+        l: 0
     };
     this.hsv = {
-        h: 207,
-        s: 1,
-        v: 0.51
+        h: 0,
+        s: 0,
+        v: 0
     };
     this.rgb = {
         r: 0,
@@ -213,16 +213,25 @@ ColorPicker.prototype.createColorPicker = function () {
         this.renderDefaults() : '');
 
     if (this.defined != null) {
-        this.changeMode(this.mode);
+        this.changeMode(this.mode== false && typeof this.defined != 'undefined'? !this.mode: this.mode);
     }
-    if(this.switch){
+    if (this.switch && typeof this.defined != 'undefined') {
         this.toggleMode();
     }
     if (this.painterInit) {
         this.painter();
     }
-    
+
 };
+
+ColorPicker.prototype.wrapper = function () {
+    var parent = this.container.parentElement;
+    this.wrap = document.createElement('div');
+    this.wrap.className = 'colorpicker-wrapper colorpicker-wrapper' + this.timeStamp;
+    parent.insertBefore(this.wrap, this.container)
+    this.wrap.appendChild(this.container);
+};
+
 
 /**
  * 
@@ -230,19 +239,13 @@ ColorPicker.prototype.createColorPicker = function () {
  */
 ColorPicker.prototype.changeMode = function (mode) {
     if (mode) {
-        this.ContainerDiv.querySelector('img').style.display = 'none';
-        this.ContainerDiv.querySelector('.crosshair').style.display = 'none';
-        this.ContainerDiv.querySelector('.overlay').style.display = 'none';
-        this.ContainerDiv.querySelector('.slide').style.display = 'none';
-        
-        this.ContainerDiv.querySelector('.standardValues').style.display = 'initial';
+        console.log(mode, 1);
+        ColorPicker.add(this.ContainerDiv.querySelector('.analogValues'), 'hidden');
+        ColorPicker.remove(this.ContainerDiv.querySelector('.standardValues'), 'hidden')
     } else {
-        this.ContainerDiv.querySelector('.standardValues').style.display = 'none';
-        
-        this.ContainerDiv.querySelector('img').style.display = 'initial';
-        this.ContainerDiv.querySelector('.crosshair').style.display = 'initial';
-        this.ContainerDiv.querySelector('.overlay').style.display = 'initial';
-        this.ContainerDiv.querySelector('.slide').style.display = 'initial';
+        console.log(mode, 2);
+        ColorPicker.remove(this.ContainerDiv.querySelector('.analogValues'), 'hidden')
+        ColorPicker.add(this.ContainerDiv.querySelector('.standardValues'), 'hidden');
     }
     this.setAction(mode);
 };
@@ -275,6 +278,7 @@ ColorPicker.prototype.getMarkUp = function (pushThisToo) {
  */
 ColorPicker.prototype.renderColorPicker = function () {
     var self = this;
+    //this.wrapper();
     this.createColorPicker();
     this.renderPosition();
     this.paint();
@@ -1025,10 +1029,12 @@ ColorPicker.prototype.aligen = 'bottom';
 ColorPicker.prototype.hex = '000000';
 ColorPicker.prototype.UI =
     '<div class="containTheColor containTheColor%timestamp%">' +
+    '<div class="analogValues">' +
     '<img src="data:image/png;base64,' + background + '">' +
     '<div class="overlay overlay%timestamp%"></div>' +
     '<span class="crosshair crosshair%timestamp%"></span>' +
     '<input class="slide slide%timestamp%" type="range" min="0" max="100" value="" step="1">' +
+    '</div>' +
     '<div class="standardValues standardValues%timestamp%">%buttons%</div>' +
     '</div>';
 
@@ -1098,7 +1104,12 @@ ColorPicker.cssOverride = function (target, source) {
     target['.containTheColor'].height = '101px';
     return target;
 };
-
+ColorPicker.add = function (object, classStr) {
+    object.className = object.className + ' ' + classStr;
+};
+ColorPicker.remove = function (object, classStr) {
+    object.className = object.className.replace(' ' + classStr, '');
+}
 
 ColorPicker.setGlobalStyle = function (cssGlobalObject) {
     var globCss = {
@@ -1157,6 +1168,9 @@ ColorPicker.setGlobalStyle = function (cssGlobalObject) {
             border: '1px solid #808080',
             'border-radius': '3px',
             'box-sizing': 'border-box'
+        },
+        '.hidden': {
+            display: 'none'
         }
 
     };

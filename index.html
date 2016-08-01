@@ -13,12 +13,14 @@
     </head>
     <body>
 
-
+        
         <input type="text" class="NoColor">
         <!--<div class="DyeMe">HALLO</div>-->
         <div class="big">
+            <div class="no1"></div>
             color
             <input type="text" id="ColorPicker" value="">
+            <div class="no1"></div><div class="no1"></div>
         </div>
         <script src="js/background.js"></script>
         <div id="mocha"></div>
@@ -67,7 +69,7 @@
         },
         defined: {
             data:[['#ffffff', '#000000'],['#ff0000','#00ff00','#0000ff'], ['#d4d6d8']],
-            switch: true
+            switch: false
         },
         //execute: function () {},
         //alwaysActive: true,
@@ -76,11 +78,14 @@
         //},
         //open: function () {
         //},
-        painter: true
+        painter: false
     });
     var color2 = new ColorPicker({
         'append': '.NoColor'
     });
+        </script>
+        <script>
+            
         </script>
         <!--<script> mocha.run();</script>-->
     </body>
