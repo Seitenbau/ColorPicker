@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        
+
         <input type="text" class="NoColor">
         <input type="text" id="ColorPicker" value="">
         <!--<div class="DyeMe">HALLO</div>-->
@@ -35,61 +35,64 @@
 
         <script>
 
-    //var spy = new Spy();
-    //spy.registerSpy('ColorPicker');
-    //var mock = new Mock();
-    //ColorPicker.setGlobalStyle({
-    //    '.containTheColor': {
-    //        border: '7px solid green'
-    //    }
-    //});
-    var color = new ColorPicker({
-        'append': '#ColorPicker',       // {input[type=text]} !important
-        'view': '#ColorPicker',       // {input[type=text]} 
-        //'dye':  '.big',                    // object class witch will be dyed. if undefined it is same as append
-        //'css': 'borderColor',
-        //'backgroundColor',            // 'borderColor', 'color', 'backgroundColor' 
+            //var spy = new Spy();
+            //spy.registerSpy('ColorPicker');
+            //var mock = new Mock();
+            //ColorPicker.setGlobalStyle({
+            //    '.containTheColor': {
+            //        border: '7px solid green'
+            //    }
+            //});
+            var color = new ColorPicker({
+                'append': '#ColorPicker',       // {input[type=text]} !important
+                'view': '#ColorPicker',       // {input[type=text]} 
+                //'dye':  '.big',                    // object class witch will be dyed. if undefined it is same as append
+                //'css': 'borderColor',
+                //'backgroundColor',            // 'borderColor', 'color', 'backgroundColor' 
 
-        'format': 'hex',              // 'hex', 'RGB', 'Hsl', 'hSv' caps dosent matter
-        'standard':'0088f5', //{                 // first value witch will be shown.
-        //    h: 207,                   // note that this need to be hsv min.: 0, max.:360 
-        //    s: 1.0,                   // min.: 0 max.: 1.0
-        //   v: 0.51                    // min.: 0 max.: 1.0
-        //},
+                'format': 'hex',              // 'hex', 'RGB', 'Hsl', 'hSv' caps dosent matter
+                'standard': '0088f5', //{                 // first value witch will be shown.
+                //    h: 207,                   // note that this need to be hsv min.: 0, max.:360 
+                //    s: 1.0,                   // min.: 0 max.: 1.0
+                //   v: 0.51                    // min.: 0 max.: 1.0
+                //},
 
-        'position': 'right',    // 'bottom center/left/right', 'top center/left/right', 
-        // 'bottom', 'top', 'left', 'right'
-        //left  top              // 'bottom' == 'bottom middle', 'top' == 'top middle' 
-        //'margin': '1000 -30',              // spacing between the input and the ColorPicker  
+                //'position': 'right',    // 'bottom center/left/right', 'top center/left/right', 
+                // 'bottom', 'top', 'left', 'right'
+                //left  top              // 'bottom' == 'bottom middle', 'top' == 'top middle' 
+                //'margin': '1000 -30',              // spacing between the input and the ColorPicker  
 
-        customCss: {
-            '.containTheColor': {
-                border: '7px solid black'
-                
-            }
-        },
-        defined: {
-            data:[['#ffffff', '#000000'],['#ff0000','#00ff00','#0000ff'], ['#d4d6d8']],
-            switch: false
-        },
-        execute: function () {
-            console.log("exec");
-        },
-        //alwaysActive: true,
-        close: function () {
-            console.log("close");
-        },
-        open: function () {
-            console.log("open");
-        },
-        painter: false
-    });
-    //var color2 = new ColorPicker({
-    //    'append': '.NoColor'
-    //});
+                customCss: {
+                    '.containTheColor': {
+                        border: '10px solid black'
+
+                    },
+                    '.crosshair': {
+                        background: 'transparent center center url(data:image/png;base64,' + cross2 +') no-repeat scroll'
+                    }
+                },
+                //defined: {
+                //    data:[['#ffffff', '#000000'],['#ff0000','#00ff00','#0000ff'], ['#d4d6d8']],
+                //    switch: false
+                //},
+                execute: function () {
+                    console.log("exec");
+                },
+                //alwaysActive: true,
+                close: function () {
+                    console.log("close");
+                },
+                open: function () {
+                    console.log("open");
+                },
+                painter: false
+            });
+            //var color2 = new ColorPicker({
+            //    'append': '.NoColor'
+            //});
         </script>
         <script>
-            
+
         </script>
         <!--<script> mocha.run();</script>-->
     </body>

@@ -76,9 +76,11 @@
  * @param {object} params contains the configuration which are set when the colorPicker is called
  */
 var ColorPicker = function (params) {
-    ColorPicker.setGlobalStyle(undefined, '');
     //timeStamp generated used by the style sheet engine
     this.timeStamp = Date.now();
+    ColorPicker.setGlobalStyle(undefined, '');
+    this.heigt = 100 + 2 * 7 + 1; // height of the colorpicker + 2 * border-width + 1 for no reason
+    this.width = 360 + 2 * 7 + 1  //width of the colorpicker + 2 * border-width + 1 for no reason
     //the time stamp will also used in the tamplate 
     this.UI = this.UI.replace(/%timestamp%/gi, this.timeStamp);
     //i dont know
@@ -141,9 +143,9 @@ var ColorPicker = function (params) {
     }
     // top, right, bottom, left from the inputtype
     this.aligen = {
-            first: 'bottom',
-            second: 'center'
-        };
+        first: 'bottom',
+        second: 'center'
+    };
     if (typeof params.position !== 'undefined') {
         this.aligen = {
             first: params.position.toLocaleLowerCase(params.position.substring(params.position.indexOf(' '), 0)),
@@ -233,27 +235,15 @@ ColorPicker.prototype.createColorPicker = function () {
     }
 
 };
-
-ColorPicker.prototype.wrapper = function () {
-    var parent = this.container.parentElement;
-    this.wrap = document.createElement('div');
-    this.wrap.className = 'colorpicker-wrapper colorpicker-wrapper' + this.timeStamp;
-    parent.insertBefore(this.wrap, this.container)
-    this.wrap.appendChild(this.container);
-};
-
-
 /**
  * 
  * set display none to colorpicker (defined color buttons only)
  */
 ColorPicker.prototype.changeMode = function (mode) {
     if (mode) {
-        console.log(mode, 1);
         ColorPicker.add(this.ContainerDiv.querySelector('.analogValues'), 'hidden');
         ColorPicker.remove(this.ContainerDiv.querySelector('.standardValues'), 'hidden');
     } else {
-        console.log(mode, 2);
         ColorPicker.remove(this.ContainerDiv.querySelector('.analogValues'), 'hidden')
         ColorPicker.add(this.ContainerDiv.querySelector('.standardValues'), 'hidden');
     }
@@ -288,7 +278,6 @@ ColorPicker.prototype.getMarkUp = function (pushThisToo) {
  */
 ColorPicker.prototype.renderColorPicker = function () {
     var self = this;
-    //this.wrapper();
     this.createColorPicker();
     this.renderPosition();
     this.paint();
@@ -297,7 +286,6 @@ ColorPicker.prototype.renderColorPicker = function () {
         self.openCallback();
         document.body.appendChild(self.ContainerDiv);
         document.documentElement.addEventListener('click', close);
-        self.intervalrendering();
         self.initPicker();
     });
 
@@ -320,31 +308,13 @@ ColorPicker.prototype.renderColorPicker = function () {
         }
     };
 };
-/**
- * 
- * runs in an interval of 100 ms the renderPosition. will be used when the colorpicker is open
- */
-ColorPicker.prototype.intervalrendering = function () {
-//    var self = this;
-//    this.interval = setInterval(function () {
-//        self.renderPosition();
-//    }, 100);
-};
-
-ColorPicker.prototype.container = {
-    getBoundingClientRect: function () {
-        return {
-            left: 1,
-            top: 2
-        };
-    }
-};
 /** 
  * 
- * set the position to the colorpicker based on the margin and 
+ * calculates the left/top value and runs calls the set-function
  */
 ColorPicker.prototype.renderPosition = function () {
     var scroll = window.scrollY;
+    
     var pos = this.container.getBoundingClientRect(); //align values from Input
     // the color picker is appanded 
     var height = pos.height;
@@ -356,21 +326,39 @@ ColorPicker.prototype.renderPosition = function () {
         top: 0,
         left: 0
     };
-    positionValues.top = (top +
-        ((this.aligen.first == 'top') ? -115 :
-            (this.aligen.first == 'bottom') ? height :
-            (this.aligen.first == 'left' || this.aligen.first == 'right') ?
-            (height * 0.5) - (115 / 2) :
-            height)) +
-        (this.margin.top + scroll);
-
-    positionValues.left = left + ((this.aligen.second == 'center') ?
-        (width * 0.5) - (375 / 2) : (this.aligen.second == 'left') ? -375 :
-        width) + this.margin.left;
+    switch (this.aligen.first) {
+        case 'top':
+            positionValues.top = -this.heigt;
+            break;
+        case 'left':
+        case 'right':
+            positionValues.top = (height * 0.5) - (this.heigt / 2);
+            break;
+        default :
+            positionValues.top = height;
+            break;
+    }
+    positionValues.top += top + this.margin.top + scroll;
+    switch (this.aligen.second) {
+        case 'left':
+            positionValues.left = -this.width;
+            break;
+        case 'right':
+            positionValues.left = width;
+            break;
+        default :
+            positionValues.left = (width * 0.5) - (this.width / 2);
+    }
+    positionValues.left += left + this.margin.left;
     this.setPosition(positionValues);
 
 };
 
+/**
+ * set the top and left value to the container
+ * @param {object} values top/left values 
+ * @return {none}
+ */
 ColorPicker.prototype.setPosition = function (values) {
     this.ContainerDiv.style.top = values.top + 'px';
     this.ContainerDiv.style.left = values.left + "px";
@@ -709,7 +697,7 @@ ColorPicker.prototype.getCurrentColor = function () {
 ColorPicker.prototype.renderDefaults = function () {
     if (this.defined == null) {
         console.log("null");
-        this.ContainerDiv.querySelector('.standardValues'+ this.timeStamp).remove();
+        this.ContainerDiv.querySelector('.standardValues' + this.timeStamp).remove();
         return;
     }
     var result = '';
@@ -722,7 +710,7 @@ ColorPicker.prototype.renderDefaults = function () {
         }
         result = result + row.replace('&&', datas);
     }
-     this.ContainerDiv.querySelector('.standardValues').innerHTML = result;
+    this.ContainerDiv.querySelector('.standardValues').innerHTML = result;
 };
 
 /**
@@ -1074,11 +1062,11 @@ ColorPicker.cssStringCreator = function (cssObject, timeStamp) {
     var css = '';
     for (var ring in cssObject) {
         var chain = cssObject[ring];
-        css = css + ring + timeStamp + ' { ';
+        css += ring + timeStamp + ' { ';
         for (var key in chain) {
-            css = css + key + ':' + chain[key] + ';';
+            css += key + ':' + chain[key] + ';';
         }
-        css = css + '} \n\n';
+        css += '} \n\n';
     }
     return css;
 };
