@@ -87,19 +87,19 @@ var ColorPicker = function (params) {
     this.activate = true;
 
     this.currentColor = {
-        h: 0,
-        s: 0,
-        l: 0
+        h: 207,
+        s: 1,
+        l: 0.256
     };
     this.hsv = {
-        h: 0,
-        s: 0,
-        v: 0
+        h: 207,
+        s: 1,
+        v: 0.513
     };
     this.rgb = {
         r: 0,
-        g: 0,
-        b: 0
+        g: 72,
+        b: 131
     };
     //params need to be set!
     if (typeof params === 'undefined') {
