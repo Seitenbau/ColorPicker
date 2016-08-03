@@ -64,6 +64,8 @@ ___
 |callback| function|a function runs on use| No Default Action |
 |open| function| a function runs when colorpicker opens|No Default Action|
 |close|finction| runs when the colorPicker close | No Default Action|
+|painter|boolean|if true a button will be appand, click and you can dye every element|false|
+|defined|Object| |data: [[],[]]|switch: bolean| activates the second type of the colorpicker | none|
 
 ## StyleSheet
 normaly ther is a posibility to style all colorPicker you are yousing by your own. therefore you can rewrite edit the css on a special way!   
