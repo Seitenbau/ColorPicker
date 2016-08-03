@@ -142,12 +142,12 @@ var ColorPicker = function (params) {
 
     }
     // top, right, bottom, left from the inputtype
-    this.aligen = {
+    this.align = {
         first: 'bottom',
         second: 'center'
     };
     if (typeof params.position !== 'undefined') {
-        this.aligen = {
+        this.align = {
             first: params.position.toLocaleLowerCase(params.position.substring(params.position.indexOf(' '), 0)),
             second: params.position.toLocaleLowerCase(params.position.substring(params.position.indexOf(' ') + 1))
         };
@@ -326,7 +326,7 @@ ColorPicker.prototype.renderPosition = function () {
         top: 0,
         left: 0
     };
-    switch (this.aligen.first) {
+    switch (this.align.first) {
         case 'top':
             positionValues.top = -this.heigt;
             break;
@@ -339,7 +339,7 @@ ColorPicker.prototype.renderPosition = function () {
             break;
     }
     positionValues.top += top + this.margin.top + scroll;
-    switch (this.aligen.second) {
+    switch (this.align.second) {
         case 'left':
             positionValues.left = -this.width;
             break;
@@ -1006,7 +1006,7 @@ ColorPicker.prototype.dye = 'body';
 ColorPicker.prototype.view = '';
 ColorPicker.prototype.format = "hsl";
 ColorPicker.prototype.value = "51";
-ColorPicker.prototype.aligen = 'bottom';
+ColorPicker.prototype.align = 'bottom';
 ColorPicker.prototype.hex = '000000';
 ColorPicker.prototype.UI =
     '<div class="containTheColor containTheColor%timestamp%">' +
