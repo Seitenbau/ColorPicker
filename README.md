@@ -12,7 +12,7 @@ ___
 ---
 ## Find here
 
-+ Discription
++ Description
 + How to Install
   - What do you need?
   - What you need to do
