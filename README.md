@@ -1,5 +1,5 @@
 # ColorPicker.js   
-## Discription
+## Description
 ---
 ColorPicker.js is a awesome JavaScript-Plugin which creates a js colorPicker and awesome tools!   
 Fuck Yeah! 
